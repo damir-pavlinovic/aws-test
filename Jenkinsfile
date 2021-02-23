@@ -3,10 +3,8 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'pwd'
-        sh 'ls'
-        sh 'gcc --version'
-        sh 'git branch'
+        sh 'gcc *.c -o main.exe'
+        sh './main.exe'
       }
     }
   }
