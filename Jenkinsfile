@@ -1,9 +1,9 @@
 pipeline {
-  agent {label 'ecs'}
+  agent any
   stages {
     stage('Build') {
       steps {
-        echo 'Hello from Jenkins slave!'
+        echo 'Hello from Jenkins!'
       }
     }
   }
