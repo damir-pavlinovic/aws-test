@@ -3,7 +3,8 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        echo 'No master executor!'
+        sh 'pwd'
+        sh 'git branch'
       }
     }
   }
