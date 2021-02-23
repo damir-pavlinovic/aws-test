@@ -3,8 +3,8 @@ pipeline {
   stages {
     stage('Build') {
       steps {
+        echo 'With S3 policy, again'
         sh 'aws s3 ls'
-        echo 'With S3 policy'
         // sh 'gcc *.c -o main.exe'
         // sh './main.exe'
       }
