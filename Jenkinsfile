@@ -3,8 +3,9 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'gcc *.c -o main.exe'
-        sh './main.exe'
+        sh 'aws s3 ls'
+        // sh 'gcc *.c -o main.exe'
+        // sh './main.exe'
       }
     }
   }
