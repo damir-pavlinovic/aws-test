@@ -40,6 +40,7 @@ pipeline {
     }
   }
   post {
+    agent {label 'build'}
     success {
       setBuildStatus("Build succeeded!", "SUCCESS");
     }
