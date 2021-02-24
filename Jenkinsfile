@@ -6,7 +6,17 @@ pipeline {
       steps {
         sh 'gcc *.c -o main.exe'
         sh './main.exe'
-	sh 'ls'
+      }
+      post {
+        success {
+          step([
+           $class: "GitHubCommitStatusSetter",
+             reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/damir-pavlinovic/aws-test.git"],
+             contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
+             errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+             statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: "Build complete", state: "SUCCESS"]]]
+          ])
+        }
       }
     }
     stage('Upload') {
@@ -29,17 +39,4 @@ pipeline {
       }
     }
   }
-post {
-  success {
-    node( label 'build') {
-      step([
-       $class: "GitHubCommitStatusSetter",
-         reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/damir-pavlinovic/aws-test.git"],
-         contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
-         errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
-         statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: "Build complete", state: "SUCCESS"]]]
-      ])
-    }
-  }
-}
 }
