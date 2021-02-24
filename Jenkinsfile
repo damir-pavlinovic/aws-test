@@ -10,7 +10,6 @@ pipeline {
       steps {
         sh 'gcc *.c -o main.exe'
         sh './main.exe'
-	echo 'Test'
       }
     }
     stage('Upload') {
