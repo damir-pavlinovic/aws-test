@@ -26,16 +26,4 @@ pipeline {
       }
     }
   }
-  post {
-    success {
-      withCredentials([usernamePassword(credentialsId: '8cd728c4-d8d4-4504-8fa0-dcca9c29e91d', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-        sh 'curl -X POST --user $USERNAME:$PASSWORD --data  "{\\"state\\": \\"success\\"}" --url $GITHUB_API_URL/statuses/$GIT_COMMIT'
-      }
-    }
-    failure {
-      withCredentials([usernamePassword(credentialsId: '8cd728c4-d8d4-4504-8fa0-dcca9c29e91d', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-        sh 'curl -X POST --user $USERNAME:$PASSWORD --data  "{\\"state\\": \\"failure\\"}" --url $GITHUB_API_URL/statuses/$GIT_COMMIT'
-      }
-    }
-  }
 }
