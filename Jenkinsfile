@@ -30,8 +30,8 @@ pipeline {
     }
   }
 post {
-  always {
-    node('master') {
+  success {
+    node( label 'build') {
       step([
        $class: "GitHubCommitStatusSetter",
          reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/damir-pavlinovic/aws-test.git"],
