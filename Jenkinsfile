@@ -1,9 +1,4 @@
 pipeline {
-  environment {
-    FULL_PATH_BRANCH = "${sh(script:'git name-rev --name-only HEAD', returnStdout: true)}"
-    BRANCH = FULL_PATH_BRANCH.substring(FULL_PATH_BRANCH.lastIndexOf('/') + 1, FULL_PATH_BRANCH.length())
-    STORAGE_LOCATION = "pavlinovic-test-bucket/" + "${env.BRANCH}"
-  }
   agent none
   stages {
     stage('Build') {
@@ -14,6 +9,11 @@ pipeline {
       }
     }
     stage('Upload') {
+      environment {
+        FULL_PATH_BRANCH = "${sh(script:'git name-rev --name-only HEAD', returnStdout: true)}"
+        BRANCH = FULL_PATH_BRANCH.substring(FULL_PATH_BRANCH.lastIndexOf('/') + 1, FULL_PATH_BRANCH.length())
+        STORAGE_LOCATION = "pavlinovic-test-bucket/" + "${env.BRANCH}"
+      }
       agent {label 'build'}
       steps {
 	s3Upload consoleLogLevel: 'INFO', 
