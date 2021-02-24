@@ -10,7 +10,7 @@ pipeline {
   }
   post {
         success {
-            echo 'Job was successful!'
+            echo 'Job was successful!!'
         }
         failure {
             echo 'Job was unsuccessful!'
