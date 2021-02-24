@@ -15,7 +15,7 @@ pipeline {
     BRANCH = FULL_PATH_BRANCH.substring(FULL_PATH_BRANCH.lastIndexOf('/') + 1, FULL_PATH_BRANCH.length())
     STORAGE_LOCATION = "pavlinovic-test-bucket/" + "${env.BRANCH}"
   }
-  agent {label 'build || test'}
+  agent none
   stages {
     stage('Build') {
       agent {label 'build'}
@@ -41,10 +41,14 @@ pipeline {
   }
   post {
     success {
-      setBuildStatus("Build succeeded!", "SUCCESS");
+      node('build') { 
+        setBuildStatus("Build succeeded!", "SUCCESS");
+      }
     }
     failure {
-      setBuildStatus("Build failed!", "FAILURE");
+      node('build') { 
+        setBuildStatus("Build failed!", "FAILURE");
+      }
     }
   }
 }
