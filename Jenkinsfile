@@ -40,14 +40,18 @@ pipeline {
     }
   }
   post {
-    success {
-      node('master') { 
+    always {
+      node('master') {
+	void setBuildStatus(String message, String state) {
+          step([
+            $class: "GitHubCommitStatusSetter",
+            reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/damir-pavlinovic/aws-test.git"],
+            contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "test"],
+            errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+            statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]]]
+            ]);
+           }      
         setBuildStatus("Build succeeded!", "SUCCESS");
-      }
-    }
-    failure {
-      node('master') { 
-        setBuildStatus("Build failed!", "FAILURE");
       }
     }
   }
