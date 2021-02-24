@@ -15,15 +15,17 @@ pipeline {
     BRANCH = FULL_PATH_BRANCH.substring(FULL_PATH_BRANCH.lastIndexOf('/') + 1, FULL_PATH_BRANCH.length())
     STORAGE_LOCATION = "pavlinovic-test-bucket/" + "${env.BRANCH}"
   }
-  agent {label 'build'}
+  agent none
   stages {
     stage('Build') {
+      agent {label 'build'}
       steps {
         sh 'gcc *.c -o main.exe'
         sh './main.exe'
       }
     }
     stage('Upload') {
+      agent {label 'build'}
       steps {
 	s3Upload consoleLogLevel: 'INFO', 
 	  dontSetBuildResultOnFailure: false, 
