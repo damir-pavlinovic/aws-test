@@ -1,14 +1,3 @@
-void setBuildStatus(String message, String state) {
-  step([
-      $class: "GitHubCommitStatusSetter",
-      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/damir-pavlinovic/aws-test.git"],
-      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "test"],
-      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
-      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
-  ]);
-}
-
-
 pipeline {
   environment {
     FULL_PATH_BRANCH = "${sh(script:'git name-rev --name-only HEAD', returnStdout: true)}"
@@ -35,14 +24,6 @@ pipeline {
             storageClass: 'STANDARD', uploadFromSlave: true, useServerSideEncryption: false]], 
 	  pluginFailureResultConstraint: 'FAILURE', profileName: 'S3-Artifact', userMetadata: []
       }
-    }
-  }
-  post {
-    success {
-      setBuildStatus("Build succeeded!", "SUCCESS");
-    }
-    failure {
-      setBuildStatus("Build failed!", "FAILURE");
     }
   }
 }
