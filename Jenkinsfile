@@ -41,12 +41,12 @@ pipeline {
   }
   post {
     success {
-      node(label 'build') { 
+      node('master') { 
         setBuildStatus("Build succeeded!", "SUCCESS");
       }
     }
     failure {
-      node(label 'build') { 
+      node('master') { 
         setBuildStatus("Build failed!", "FAILURE");
       }
     }
