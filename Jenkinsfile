@@ -6,6 +6,7 @@ pipeline {
       steps {
         sh 'gcc *.c -o main.exe'
         sh './main.exe'
+	sh 'ls'
       }
     }
     stage('Upload') {
