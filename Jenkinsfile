@@ -34,7 +34,7 @@ pipeline {
 	    excludedFile: '', flatten: false, gzipFiles: false, 
 	    keepForever: false, managedArtifacts: false, noUploadOnFailure: true, 
 	    selectedRegion: 'eu-central-1', showDirectlyInBrowser: false, sourceFile: '**/*.exe', 
-            storageClass: 'STANDARD', uploadFromSlave: true, useServerSideEncryption: false]], 
+            storageClass: 'STANDARD', uploadFromSlave: false, useServerSideEncryption: false]], 
 	  pluginFailureResultConstraint: 'FAILURE', profileName: 'S3-Artifact', userMetadata: []
       }
     }
